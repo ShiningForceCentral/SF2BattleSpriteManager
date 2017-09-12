@@ -60,7 +60,7 @@ public class DisassemblyManager {
                         int frameOffset = 6+i*2 + getNextWord(data,6+i*2);
                         int dataLength = 0;
                         if((6+(i+1)*2)<palettesOffset){
-                            dataLength = 6+i*2 + getNextWord(data,6+(i+1)*2) - frameOffset;
+                            dataLength = 6+i*2 + getNextWord(data,6+(i+1)*2)+2 - frameOffset;
                         }else{
                             dataLength = data.length - frameOffset;
                         }
@@ -68,6 +68,7 @@ public class DisassemblyManager {
                         System.arraycopy(data, frameOffset, tileData, 0, dataLength);
                         Tile[] frame = new StackGraphicsDecoder().decodeStackGraphics(tileData, paletteList.get(0));
                         frameList.add(frame);
+                        System.out.println("Frame "+i+" length="+dataLength+", offset="+frameOffset+", tiles="+frame.length);
                     }
                     battlesprite.setFrames(frameList.toArray(new Tile[frameList.size()][]));
                     if(battlesprite.getFrames()[0].length>144){
@@ -88,36 +89,66 @@ public class DisassemblyManager {
     public static void exportDisassembly(BattleSprite battlesprite, String filepath){
         System.out.println("com.sfc.sf2.battlesprite.io.DisassemblyManager.exportDisassembly() - Exporting disassembly ...");
         try{
-            /*    byte[] eyeTiles = new byte[2+battlesprite.getEyeTiles().length*4];
-                eyeTiles[0] = 0;
-                eyeTiles[1] = (byte)(battlesprite.getEyeTiles().length & 0xFF);
-                for(int i=0;i<battlesprite.getEyeTiles().length;i++){
-                    eyeTiles[2+i*4+0] = (byte)(battlesprite.getEyeTiles()[i][0] & 0xFF);
-                    eyeTiles[2+i*4+1] = (byte)(battlesprite.getEyeTiles()[i][1] & 0xFF);
-                    eyeTiles[2+i*4+2] = (byte)(battlesprite.getEyeTiles()[i][2] & 0xFF);
-                    eyeTiles[2+i*4+3] = (byte)(battlesprite.getEyeTiles()[i][3] & 0xFF);
+            
+            
+                short animSpeed = (short)(battlesprite.getAnimSpeed()&0xFFFF);
+                short unknown = battlesprite.getUnknown();
+                
+                Color[][] palettes = battlesprite.getPalettes();
+                byte[][] paletteBytes = new byte[palettes.length][];
+            
+                Tile[][] frames = battlesprite.getFrames();
+            
+                byte[][] frameBytes = new byte[frames.length][];
+                short[] frameOffsets = new short[frames.length];
+                        
+                short palettesOffset = (short) (frames.length * 2 + 2);
+                
+                for(int i=0;i<palettes.length;i++){
+                    PaletteEncoder.producePalette(palettes[i]);
+                    paletteBytes[i] = PaletteEncoder.getNewPaletteFileBytes();
                 }
-                byte[] mouthTiles = new byte[2+battlesprite.getMouthTiles().length*4];
-                mouthTiles[0] = 0;
-                mouthTiles[1] = (byte)(battlesprite.getMouthTiles().length & 0xFF);
-                for(int i=0;i<battlesprite.getMouthTiles().length;i++){
-                    mouthTiles[2+i*4+0] = (byte)(battlesprite.getMouthTiles()[i][0] & 0xFF);
-                    mouthTiles[2+i*4+1] = (byte)(battlesprite.getMouthTiles()[i][1] & 0xFF);
-                    mouthTiles[2+i*4+2] = (byte)(battlesprite.getMouthTiles()[i][2] & 0xFF);
-                    mouthTiles[2+i*4+3] = (byte)(battlesprite.getMouthTiles()[i][3] & 0xFF);
+                
+                int framesSize = 0;
+                int totalSize = 6 + frames.length * 2 + palettes.length * 32;
+                for(int i=0;i<frames.length;i++){
+                    StackGraphicsEncoder.produceGraphics(frames[i]);
+                    frameBytes[i] = StackGraphicsEncoder.getNewGraphicsFileBytes();
+                    if(i==0){
+                        frameOffsets[i] = (short)(frames.length * 2 + palettes.length * 32);
+                        System.out.println("Frame "+i+" length="+frameBytes[i].length+", offset="+frameOffsets[i]);
+                    }else{
+                        int target = frameOffsets[i-1] + 6 + (i-1)*2 + frameBytes[i-1].length;
+                        int offsetLocation = 6 + i*2;
+                        frameOffsets[i] = (short)((target - offsetLocation)&0xFFFF);
+                        System.out.println("Frame "+i+" length="+frameBytes[i].length+", offset="+frameOffsets[i]);
+                    }
+                    framesSize += frameBytes[i].length;
+                    totalSize += frameBytes[i].length;
                 }
-                PaletteEncoder.producePalette(battlesprite.getTiles()[0].getPalette());
-                byte[] palette = PaletteEncoder.getNewPaletteFileBytes();
-                StackGraphicsEncoder.produceGraphics(battlesprite.getTiles());
-                byte[] tileset = StackGraphicsEncoder.getNewGraphicsFileBytes();
-                byte[] newBattleSpriteFileBytes = new byte[eyeTiles.length+mouthTiles.length+palette.length+tileset.length];
-                System.arraycopy(eyeTiles, 0, newBattleSpriteFileBytes, 0, eyeTiles.length);
-                System.arraycopy(mouthTiles, 0, newBattleSpriteFileBytes, eyeTiles.length, mouthTiles.length);
-                System.arraycopy(palette, 0, newBattleSpriteFileBytes, eyeTiles.length+mouthTiles.length, palette.length);
-                System.arraycopy(tileset, 0, newBattleSpriteFileBytes, eyeTiles.length+mouthTiles.length+palette.length, tileset.length);
+
+                byte[] newBattleSpriteFileBytes = new byte[totalSize];
+                        
+                newBattleSpriteFileBytes[0] = (byte) ((animSpeed&0xFF00) >> 8);
+                newBattleSpriteFileBytes[1] = (byte) (animSpeed&0xFF); 
+                newBattleSpriteFileBytes[2] = (byte) ((unknown&0xFF00) >> 8);
+                newBattleSpriteFileBytes[3] = (byte) (unknown&0xFF); 
+                newBattleSpriteFileBytes[4] = (byte) ((palettesOffset&0xFF00) >> 8);
+                newBattleSpriteFileBytes[5] = (byte) (palettesOffset&0xFF); 
+                for(int i=0;i<frameOffsets.length;i++){
+                    newBattleSpriteFileBytes[6+i*2] =  (byte) ((frameOffsets[i]&0xFF00) >> 8);
+                    newBattleSpriteFileBytes[6+i*2+1] = (byte) (frameOffsets[i]&0xFF); 
+                }
+                for(int i=0;i<paletteBytes.length;i++){
+                    System.arraycopy(paletteBytes[i], 0, newBattleSpriteFileBytes, 6+frameOffsets.length*2+i*32, 32);
+                }
+                for(int i=0;i<frameBytes.length;i++){
+                    System.out.println("Writing frame "+i+" with length="+frameBytes[i].length+" at offset="+(int)(frameOffsets[i]+6+i*2));
+                    System.arraycopy(frameBytes[i], 0, newBattleSpriteFileBytes, frameOffsets[i]+6+i*2, frameBytes[i].length);
+                }
                 Path graphicsFilePath = Paths.get(filepath);
                 Files.write(graphicsFilePath,newBattleSpriteFileBytes);
-                System.out.println(newBattleSpriteFileBytes.length + " bytes into " + graphicsFilePath);  */              
+                System.out.println(newBattleSpriteFileBytes.length + " bytes into " + graphicsFilePath);                
         } catch (Exception ex) {
             Logger.getLogger(DisassemblyManager.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();

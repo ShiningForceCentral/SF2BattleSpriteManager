@@ -296,7 +296,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel2.setText("<html>Select a battlesprite file.<br/>Typical disassembly path : data/graphics/battles/battlesprites/</html>");
 
-        jTextField9.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\graphics\\battles\\battlesprites\\allies\\allybattlesprite00.bin");
+        jTextField9.setText(".\\allies\\allybattlesprite01.bin");
         jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField9ActionPerformed(evt);
@@ -349,7 +349,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel11.setText("Path prefix :");
 
-        jTextField11.setText(".\\battlesprite00");
+        jTextField11.setText(".\\allies\\battlesprite01");
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
@@ -386,7 +386,7 @@ public class MainEditor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jTextField11)
+                                .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton17))
                             .addGroup(jPanel9Layout.createSequentialGroup()
@@ -444,7 +444,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel14.setText("File :");
 
-        jTextField13.setText(".\\newbattlesprite00.bin");
+        jTextField13.setText(".\\allies\\newallybattlesprite01.bin");
         jTextField13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField13ActionPerformed(evt);
@@ -495,7 +495,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel15.setText("Path prefix :");
 
-        jTextField15.setText(".\\battlesprite00");
+        jTextField15.setText(".\\allies\\battlesprite01");
         jTextField15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField15ActionPerformed(evt);
@@ -657,6 +657,7 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setLayout(new GridLayout(1,1));
         BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
         battlespriteLayout.setTiles(tiles);
+        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
         jPanel2.add(battlespriteLayout);
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();

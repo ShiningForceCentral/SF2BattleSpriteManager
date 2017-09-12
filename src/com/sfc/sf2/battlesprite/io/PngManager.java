@@ -9,13 +9,17 @@ import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.graphics.layout.DefaultLayout;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.layout.BattleSpriteLayout;
+import com.sfc.sf2.palette.graphics.PaletteDecoder;
+import com.sfc.sf2.palette.graphics.PaletteEncoder;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -31,21 +35,42 @@ import javax.imageio.ImageIO;
  */
 public class PngManager {
     
-    public static BattleSprite importPng(String filepath, BattleSprite battleSprite){
+    public static BattleSprite importPng(String filepath, BattleSprite battleSprite, boolean usePngPalette){
         System.out.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - Importing PNG files ...");
         BattleSprite battlesprite = new BattleSprite();
         try{
-/*            Tile[] tiles = loadPngFile(filepath);
-            if(tiles!=null){
-                if(tiles.length==64){                   
-                   battlesprite.setTiles(tiles);
-                   System.out.println("Created BattleSprite with " + tiles.length + " tiles.");                       
-                }else{
-                    System.out.println("Could not create BattleSprite because of wrong length : tiles=" + tiles.length);
+            List<Tile[]> frames = new ArrayList<Tile[]>();
+            List<Color[]> palettes = new ArrayList<Color[]>();
+            String dir = filepath.substring(0, filepath.lastIndexOf(System.getProperty("file.separator")));
+            String pattern = filepath.substring(filepath.lastIndexOf(System.getProperty("file.separator"))+1);
+            File directory = new File(dir);
+            File[] files = directory.listFiles();
+            for(File f : files){
+                if(f.getName().startsWith(pattern + "-frame")){
+                    Tile[] frame = loadPngFile(f.getAbsolutePath());
+                    frames.add(frame);
+                }else if(f.getName().startsWith(pattern + "-palette")){
+                    byte[] data = Files.readAllBytes(f.toPath());
+                    Color[] palette = PaletteDecoder.parsePalette(data);
+                    palettes.add(palette);
                 }
-            }*/
+            }
+            if(frames.isEmpty()){
+                System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - ERROR : no frame imported. PNG files missing for this pattern ?");
+            } else{
+                System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - " + frames.size() + " : " + frames);
+                if(frames.get(0).length>144){
+                    battlesprite.setType(BattleSprite.TYPE_ENEMY);
+                }
+                if(usePngPalette || palettes.isEmpty()){
+                    palettes.add(0, frames.get(0)[0].getPalette());
+                }
+                battlesprite.setFrames(frames.toArray(new Tile[frames.size()][]));
+                battlesprite.setPalettes(palettes.toArray(new Color[palettes.size()][]));
+            }
         }catch(Exception e){
              System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - Error while parsing graphics data : "+e);
+             e.printStackTrace();
         }        
         System.out.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - PNG files imported.");
         return battlesprite;                
@@ -72,11 +97,14 @@ public class PngManager {
                         System.out.println("PNG FORMAT WARNING : DIMENSIONS ARE NOT MULTIPLES OF 8. (8 pixels per tile)");
                     }else{
                         tiles = new Tile[(imageWidth/8)*(imageHeight/8)];
+                        int blockColumnsNumber = (imageWidth>96)?4:3;
                         int tileId = 0;
-                                    for(int tileLine=0;tileLine<8;tileLine++){
-                                        for(int tileColumn=0;tileColumn<8;tileColumn++){
-                                            int x = (tileColumn)*8;
-                                            int y = (tileLine)*8;
+                            for(int blockColumn=0;blockColumn<blockColumnsNumber;blockColumn++){
+                                for(int blockLine=0;blockLine<3;blockLine++){
+                                    for(int tileColumn=0;tileColumn<4;tileColumn++){
+                                        for(int tileLine=0;tileLine<4;tileLine++){
+                                            int x = (blockColumn*4+tileColumn)*8;
+                                            int y = (blockLine*4+tileLine)*8;
                                             //System.out.println("Building tile from coordinates "+x+":"+y);
                                             Tile tile = new Tile();
                                             tile.setId(tileId);
@@ -96,7 +124,9 @@ public class PngManager {
                                             tiles[tileId] = tile;   
                                             tileId++;
                                         }
-                                    }        
+                                    }
+                                }
+                            }                 
 
                     }
                 }                
@@ -126,26 +156,37 @@ public class PngManager {
     }
     
     
-    public static void exportPng(BattleSprite battlesprite, String filepath){
+    public static void exportPng(BattleSprite battlesprite, String filepath, int selectedPalette){
         try {
-            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - Exporting PNG file ...");
-            //writePngFile(battlesprite.getTiles(),filepath);                
-            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - PNG file exported.");
+            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - Exporting PNG files and palettes ...");
+            Tile[][] frames = battlesprite.getFrames();
+            for(int i=0;i<frames.length;i++){
+                String framePath = filepath + "-frame-" + String.valueOf(i) + ".png";
+                writePngFile(frames[i],battlesprite.getType(),framePath); 
+            }
+            Color[][] palettes = battlesprite.getPalettes();
+            for(int i=0;i<palettes.length;i++){
+                String palettePath = filepath + "-palette-" + String.valueOf(i) + ".bin";
+                PaletteEncoder.producePalette(palettes[i]);
+                byte[] palette = PaletteEncoder.getNewPaletteFileBytes();
+                Path graphicsFilePath = Paths.get(palettePath);
+                Files.write(graphicsFilePath,palette);
+            }
+                           
+            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - PNG files and palettes exported.");
         } catch (Exception ex) {
             Logger.getLogger(PngManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-                
     }    
     
-    public static void writePngFile(Tile[] tiles, String filepath){
+    public static void writePngFile(Tile[] tiles, int battlespriteType, String filepath){
         try {
-        /*    System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - Exporting PNG file ...");
-            BufferedImage image = BattleSpriteLayout.buildImage(tiles, 8, true);
+            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - Exporting PNG file ...");
+            BufferedImage image = BattleSpriteLayout.buildImage(tiles, 12, battlespriteType, true);
             File outputfile = new File(filepath);
             System.out.println("File path : "+outputfile.getAbsolutePath());
             ImageIO.write(image, "png", outputfile);
-            System.out.println("PNG file exported : " + outputfile.getAbsolutePath());*/
+            System.out.println("PNG file exported : " + outputfile.getAbsolutePath());
         } catch (Exception ex) {
             Logger.getLogger(PngManager.class.getName()).log(Level.SEVERE, null, ex);
         }       

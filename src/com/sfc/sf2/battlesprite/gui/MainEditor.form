@@ -480,7 +480,7 @@
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="jTextField9">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value="D:\u005cSEGADEV\u005cGITHUB\u005cSF2DISASM\u005cdisasm\u005cdata\u005cgraphics\u005cbattles\u005cbattlesprites\u005callies\u005callybattlesprite00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value=".\u005callies\u005callybattlesprite01.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
@@ -521,7 +521,7 @@
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Group type="102" attributes="0">
-                                                              <Component id="jTextField11" max="32767" attributes="0"/>
+                                                              <Component id="jTextField11" pref="311" max="32767" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
                                                               <Component id="jButton17" min="-2" max="-2" attributes="0"/>
                                                           </Group>
@@ -569,7 +569,7 @@
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="jTextField11">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value=".\u005cbattlesprite00" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value=".\u005callies\u005cbattlesprite01" containsInvalidXMLChars="true"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField11ActionPerformed"/>
@@ -711,7 +711,7 @@
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="jTextField13">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value=".\u005cnewbattlesprite00.bin" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value=".\u005callies\u005cnewallybattlesprite01.bin" containsInvalidXMLChars="true"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField13ActionPerformed"/>
@@ -788,7 +788,7 @@
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="jTextField15">
                                       <Properties>
-                                        <Property name="text" type="java.lang.String" value=".\u005cbattlesprite00" containsInvalidXMLChars="true"/>
+                                        <Property name="text" type="java.lang.String" value=".\u005callies\u005cbattlesprite01" containsInvalidXMLChars="true"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField15ActionPerformed"/>

@@ -26,12 +26,14 @@ public class BattleSpriteManager {
     public void importDisassembly(String filePath){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Importing disassembly ...");
         battlesprite = DisassemblyManager.importDisassembly(filePath);
-        int blockColumnsNumber = (battlesprite.getType()==BattleSprite.TYPE_ALLY)?3:4;
-        tiles = new Tile[battlesprite.getFrames().length*blockColumnsNumber*4*12];
-        for(int i=0;i<battlesprite.getFrames().length;i++){
-            System.arraycopy(battlesprite.getFrames()[i], 0, tiles, i*blockColumnsNumber*4*12, blockColumnsNumber*4*12);
+        if(battlesprite.getFrames() != null && battlesprite.getFrames().length > 0){
+            int blockColumnsNumber = (battlesprite.getType()==BattleSprite.TYPE_ALLY)?3:4;
+            tiles = new Tile[battlesprite.getFrames().length*blockColumnsNumber*4*12];
+            for(int i=0;i<battlesprite.getFrames().length;i++){
+                System.arraycopy(battlesprite.getFrames()[i], 0, tiles, i*blockColumnsNumber*4*12, blockColumnsNumber*4*12);
+            }
+            graphicsManager.setTiles(tiles);
         }
-        graphicsManager.setTiles(tiles);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Disassembly imported.");
     }
     
@@ -44,19 +46,21 @@ public class BattleSpriteManager {
     
     public void importPng(String filepath, boolean usePngPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importPng() - Importing PNG ...");
-        battlesprite = PngManager.importPng(filepath, battlesprite);
-        int blockColumnsNumber = (battlesprite.getType()==BattleSprite.TYPE_ALLY)?3:4;
-        tiles = new Tile[battlesprite.getFrames().length*blockColumnsNumber*4*12];
-        for(int i=0;i<battlesprite.getFrames().length;i++){
-            System.arraycopy(battlesprite.getFrames()[i], 0, tiles, i*blockColumnsNumber*4*12, blockColumnsNumber*4*12);
+        battlesprite = PngManager.importPng(filepath, battlesprite, usePngPalette);
+        if(battlesprite.getFrames() != null && battlesprite.getFrames().length > 0){
+            int blockColumnsNumber = (battlesprite.getType()==BattleSprite.TYPE_ALLY)?3:4;
+            tiles = new Tile[battlesprite.getFrames().length*blockColumnsNumber*4*12];
+            for(int i=0;i<battlesprite.getFrames().length;i++){
+                System.arraycopy(battlesprite.getFrames()[i], 0, tiles, i*blockColumnsNumber*4*12, blockColumnsNumber*4*12);
+            }
+            graphicsManager.setTiles(tiles);
         }
-        graphicsManager.setTiles(tiles);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importPng() - PNG imported.");
     }
     
     public void exportPng(String filepath, int selectedPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportPng() - Exporting PNG ...");
-        PngManager.exportPng(battlesprite, filepath);
+        PngManager.exportPng(battlesprite, filepath, selectedPalette);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportPng() - PNG exported.");       
     }
 
