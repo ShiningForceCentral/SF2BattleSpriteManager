@@ -367,7 +367,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel11.setText("Path prefix :");
 
-        jTextField11.setText(".\\allies\\battlesprite01");
+        jTextField11.setText(".\\allies\\allybattlesprite01");
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
@@ -436,7 +436,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel12.setText("Path prefix :");
 
-        jTextField12.setText(".\\allies\\battlesprite01");
+        jTextField12.setText(".\\allies\\allybattlesprite01");
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField12ActionPerformed(evt);
@@ -531,7 +531,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel14.setText("File :");
 
-        jTextField13.setText(".\\allies\\newallybattlesprite01.bin");
+        jTextField13.setText(".\\allies\\allybattlesprite01.bin");
         jTextField13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField13ActionPerformed(evt);
@@ -582,7 +582,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel15.setText("Path prefix :");
 
-        jTextField15.setText(".\\allies\\battlesprite01");
+        jTextField15.setText(".\\allies\\allybattlesprite01");
         jTextField15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField15ActionPerformed(evt);
@@ -644,7 +644,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel16.setText("Path prefix :");
 
-        jTextField16.setText(".\\allies\\battlesprite01");
+        jTextField16.setText(".\\allies\\allybattlesprite01");
         jTextField16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField16ActionPerformed(evt);
@@ -797,6 +797,8 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         battlespriteManager.importPng(jTextField11.getText(), jCheckBox1.isSelected());
+        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
+        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
         jComboBox1.removeAllItems();
         for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
@@ -811,6 +813,9 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();  
+        jTextField13.setText(jTextField11.getText());
+        jTextField15.setText(jTextField11.getText());
+        jTextField16.setText(jTextField11.getText());
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -843,6 +848,9 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();   
+        jTextField13.setText(jTextField9.getText());
+        jTextField15.setText(jTextField9.getText());
+        jTextField16.setText(jTextField9.getText());
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
@@ -905,7 +913,9 @@ public class MainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        battlespriteManager.importGif(jTextField12.getText(), jCheckBox1.isSelected());
+        battlespriteManager.importGif(jTextField12.getText(), jCheckBox2.isSelected());
+        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
+        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
         jComboBox1.removeAllItems();
         for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
@@ -920,6 +930,9 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();  
+        jTextField13.setText(jTextField12.getText());
+        jTextField15.setText(jTextField12.getText());
+        jTextField16.setText(jTextField12.getText());
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed

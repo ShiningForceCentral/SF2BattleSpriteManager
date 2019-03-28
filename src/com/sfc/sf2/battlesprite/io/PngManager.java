@@ -46,7 +46,7 @@ public class PngManager {
             File directory = new File(dir);
             File[] files = directory.listFiles();
             for(File f : files){
-                if(f.getName().startsWith(pattern + "-frame")){
+                if(f.getName().startsWith(pattern + "-frame") && f.getName().endsWith(".png")){
                     Tile[] frame = loadPngFile(f.getAbsolutePath());
                     frames.add(frame);
                 }else if(f.getName().startsWith(pattern + "-palette")){
