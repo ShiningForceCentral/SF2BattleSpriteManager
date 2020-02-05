@@ -715,7 +715,7 @@ public class MainEditor extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -813,9 +813,11 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();  
-        jTextField13.setText(jTextField11.getText());
-        jTextField15.setText(jTextField11.getText());
-        jTextField16.setText(jTextField11.getText());
+        String outputBasePath = jTextField11.getText();
+        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
+        jTextField13.setText(outputBasePath);
+        jTextField15.setText(outputBasePath);
+        jTextField16.setText(outputBasePath);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -848,9 +850,11 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();   
-        jTextField13.setText(jTextField9.getText());
-        jTextField15.setText(jTextField9.getText());
-        jTextField16.setText(jTextField9.getText());
+        String outputBasePath = jTextField9.getText();
+        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
+        jTextField13.setText(outputBasePath);
+        jTextField15.setText(outputBasePath);
+        jTextField16.setText(outputBasePath);
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
@@ -930,9 +934,11 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();  
-        jTextField13.setText(jTextField12.getText());
-        jTextField15.setText(jTextField12.getText());
-        jTextField16.setText(jTextField12.getText());
+        String outputBasePath = jTextField12.getText();
+        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
+        jTextField13.setText(outputBasePath);
+        jTextField15.setText(outputBasePath);
+        jTextField16.setText(outputBasePath);
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed

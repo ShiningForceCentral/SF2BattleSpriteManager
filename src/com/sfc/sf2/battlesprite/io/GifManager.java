@@ -80,6 +80,7 @@ public class GifManager {
     
     public static Tile[] loadGifFile(String filepath) throws IOException{
         Tile[] tiles = null;
+        boolean cFound = false;
         try{
             Path path = Paths.get(filepath);
             if(path.toFile().exists()){
@@ -89,7 +90,7 @@ public class GifManager {
                     System.out.println("GIF FORMAT ERROR : COLORS ARE NOT INDEXED AS EXPECTED.");
                 }else{
                     IndexColorModel icm = (IndexColorModel) cm;
-                    Color[] palette = buildColors(icm);
+                    Color[] palette = PaletteDecoder.parsePalette(PaletteEncoder.producePalette(buildColors(icm)));
 
                     int imageWidth = img.getWidth();
                     int imageHeight = img.getHeight();
@@ -112,11 +113,39 @@ public class GifManager {
                                             for(int j=0;j<8;j++){
                                                 for(int i=0;i<8;i++){
                                                     Color color = new Color(img.getRGB(x+i,y+j));
+                                                    int a = PaletteDecoder.VALUE_MAP.get(PaletteEncoder.VALUE_ARRAY[color.getAlpha()]&0xE);;
+                                                    int b = PaletteDecoder.VALUE_MAP.get(PaletteEncoder.VALUE_ARRAY[color.getBlue()]&0xE);;
+                                                    int g = PaletteDecoder.VALUE_MAP.get(PaletteEncoder.VALUE_ARRAY[color.getGreen()]&0xE);;
+                                                    int r = PaletteDecoder.VALUE_MAP.get(PaletteEncoder.VALUE_ARRAY[color.getRed()]&0xE);;
+                                                    Color standardizedColor = new Color(r,g,b);
+                                                    cFound = false;
                                                     for(int c=0;c<16;c++){
-                                                        if(color.equals(palette[c])){
+                                                        if(standardizedColor.equals(palette[c])){
                                                             tile.setPixel(i, j, c);
+                                                            cFound = true;
                                                             break;
                                                         }
+                                                    }
+                                                    if(!cFound){
+                                                        //TODO find nearest color with lowest r*g*b diff
+                                                        int diff = Integer.MAX_VALUE;
+                                                        int index = 0;
+                                                        if(a>=128){
+                                                            index=0;
+                                                        }else{
+                                                            for(int c=0;c<16;c++){
+                                                                int bDiff = Math.abs(palette[c].getBlue()-color.getBlue())+1;
+                                                                int gDiff = Math.abs(palette[c].getGreen()-color.getGreen())+1;
+                                                                int rDiff = Math.abs(palette[c].getRed()-color.getRed())+1;
+                                                                int candidateDiff = bDiff * gDiff * rDiff;
+                                                                if(candidateDiff<=diff){
+                                                                    diff = candidateDiff;
+                                                                    index = c;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        tile.setPixel(i, j, index);
                                                     }
                                                 }
                                             }
