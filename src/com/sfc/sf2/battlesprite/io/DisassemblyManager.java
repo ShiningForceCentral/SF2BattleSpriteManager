@@ -51,7 +51,7 @@ public class DisassemblyManager {
                         byte[] paletteData = new byte[32];
                         System.arraycopy(data, palettesOffset+i*32, paletteData, 0, paletteData.length);
                         Color[] palette = PaletteDecoder.parsePalette(paletteData);
-                        palette[0] = new Color(255, 255, 255, 0);
+                        //palette[0] = new Color(0, 255, 255, 0);
                         paletteList.add(palette);
                     }
                     battlesprite.setPalettes(paletteList.toArray(new Color[paletteList.size()][]));

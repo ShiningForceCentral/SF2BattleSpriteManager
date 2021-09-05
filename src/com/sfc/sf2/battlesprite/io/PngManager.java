@@ -196,6 +196,7 @@ public class PngManager {
             Color[][] palettes = battlesprite.getPalettes();
             for(int i=0;i<palettes.length;i++){
                 String palettePath = filepath + "-palette-" + String.valueOf(i) + ".bin";
+                //palettes[i][0] = new Color(0, 255, 255, 0);
                 PaletteEncoder.producePalette(palettes[i]);
                 byte[] palette = PaletteEncoder.getNewPaletteFileBytes();
                 Path graphicsFilePath = Paths.get(palettePath);
