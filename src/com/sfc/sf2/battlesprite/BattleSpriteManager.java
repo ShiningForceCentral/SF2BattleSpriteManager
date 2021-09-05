@@ -10,6 +10,7 @@ import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.battlesprite.io.DisassemblyManager;
 import com.sfc.sf2.battlesprite.io.PngManager;
 import com.sfc.sf2.battlesprite.io.GifManager;
+import com.sfc.sf2.battlesprite.io.SFCDBankManager;
 import com.sfc.sf2.palette.PaletteManager;
 import java.awt.Color;
 
@@ -86,6 +87,29 @@ public class BattleSpriteManager {
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportGif() - Exporting GIF ...");
         GifManager.exportGif(battlesprite, filepath, selectedPalette);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportGif() - GIF exported.");       
+    }
+       
+    public void importSFCDBank(String filePath, String loadingOffset, String pointerTableOffset, int battleSpriteIndex){
+        System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Importing disassembly ...");
+        int ldOffset = Integer.parseInt(loadingOffset, 16);
+        int ptOffset = 0;
+        if(!pointerTableOffset.isBlank()){
+            ptOffset = Integer.parseInt(pointerTableOffset, 16);
+        }
+        try{
+            battlesprite = SFCDBankManager.importSFCDBank(filePath, ldOffset, ptOffset, battleSpriteIndex);
+        }catch(Exception e){
+            
+        }
+        if(battlesprite.getFrames() != null && battlesprite.getFrames().length > 0){
+            int blockColumnsNumber = (battlesprite.getType()==BattleSprite.TYPE_ALLY)?3:4;
+            tiles = new Tile[battlesprite.getFrames().length*blockColumnsNumber*4*12];
+            for(int i=0;i<battlesprite.getFrames().length;i++){
+                System.arraycopy(battlesprite.getFrames()[i], 0, tiles, i*blockColumnsNumber*4*12, blockColumnsNumber*4*12);
+            }
+            graphicsManager.setTiles(tiles);
+        }
+        System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Disassembly imported.");
     }
 
     public BattleSprite getBattleSprite() {
