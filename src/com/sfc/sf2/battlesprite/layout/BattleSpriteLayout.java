@@ -122,11 +122,9 @@ public class BattleSpriteLayout extends JPanel {
 
     public void setDisplaySize(int displaySize) {
         this.displaySize = displaySize;
-        this.revalidate();
     }
 
     public void setShowGrid(boolean showGrid) {
         this.showGrid = showGrid;
-        this.revalidate();
     }
 }

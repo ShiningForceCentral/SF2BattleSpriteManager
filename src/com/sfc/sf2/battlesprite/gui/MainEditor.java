@@ -662,8 +662,8 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -816,7 +816,7 @@ public class MainEditor extends javax.swing.JFrame {
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -857,9 +857,7 @@ public class MainEditor extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1066,18 +1064,19 @@ public class MainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void updateInterface(JTextField inputPathLabel) {
-        jTextField1.setText(String.valueOf(battleSpriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battleSpriteManager.getBattleSprite().getStatusOffset()));
         jComboBox1.removeAllItems();
         for(int i=0;i<battleSpriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
         }
-        battleSpriteLayout.setLayout(new GridLayout(1,1));
+        jPanel2.setLayout(new GridLayout(1,1));
         battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
         repaintTilesPanel();
+        
+        jTextField1.setText(String.valueOf(battleSpriteManager.getBattleSprite().getAnimSpeed()));
+        jTextField2.setText(String.valueOf(battleSpriteManager.getBattleSprite().getStatusOffset()));
         String outputBasePath = inputPathLabel.getText();
         outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
+        jTextField13.setText(outputBasePath + ".bin");
         jTextField15.setText(outputBasePath);
         jTextField16.setText(outputBasePath);
     }
@@ -1085,6 +1084,7 @@ public class MainEditor extends javax.swing.JFrame {
     private void repaintTilesPanel() {
         battleSpriteLayout.revalidate();
         battleSpriteLayout.repaint();
+        jPanel2.setSize(battleSpriteLayout.getSize());
     }
     
     /**
