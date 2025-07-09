@@ -6,8 +6,6 @@
 package com.sfc.sf2.battlesprite.io;
 
 import com.sfc.sf2.graphics.Tile;
-import com.sfc.sf2.graphics.compressed.BasicGraphicsDecoder;
-import com.sfc.sf2.graphics.compressed.BasicGraphicsEncoder;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.graphics.compressed.StackGraphicsDecoder;
 import com.sfc.sf2.graphics.compressed.StackGraphicsEncoder;
@@ -20,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,9 +38,9 @@ public class DisassemblyManager {
                 byte[] data = Files.readAllBytes(path);
                 if(data.length>42){
                     short animSpeed = getNextWord(data,0);
-                    short unknown = getNextWord(data,2);
+                    short statusOffset = getNextWord(data,2);
                     battlesprite.setAnimSpeed(animSpeed);
-                    battlesprite.setUnknown(unknown);
+                    battlesprite.setStatusOffset(statusOffset);
                     int palettesOffset = 4 + getNextWord(data,4);
                     int firstFrameOffset = 6 + getNextWord(data,6);
                     List<Color[]> paletteList = new ArrayList<Color[]>();
@@ -92,7 +89,7 @@ public class DisassemblyManager {
             
             
                 short animSpeed = (short)(battlesprite.getAnimSpeed()&0xFFFF);
-                short unknown = battlesprite.getUnknown();
+                short statusOffset = battlesprite.getStatusOffset();
                 
                 Color[][] palettes = battlesprite.getPalettes();
                 byte[][] paletteBytes = new byte[palettes.length][];
@@ -131,8 +128,8 @@ public class DisassemblyManager {
                         
                 newBattleSpriteFileBytes[0] = (byte) ((animSpeed&0xFF00) >> 8);
                 newBattleSpriteFileBytes[1] = (byte) (animSpeed&0xFF); 
-                newBattleSpriteFileBytes[2] = (byte) ((unknown&0xFF00) >> 8);
-                newBattleSpriteFileBytes[3] = (byte) (unknown&0xFF); 
+                newBattleSpriteFileBytes[2] = (byte) ((statusOffset&0xFF00) >> 8);
+                newBattleSpriteFileBytes[3] = (byte) (statusOffset&0xFF); 
                 newBattleSpriteFileBytes[4] = (byte) ((palettesOffset&0xFF00) >> 8);
                 newBattleSpriteFileBytes[5] = (byte) (palettesOffset&0xFF); 
                 for(int i=0;i<frameOffsets.length;i++){

@@ -25,7 +25,7 @@ public class BattleSprite {
     
     private int animSpeed;
     
-    private short unknown;
+    private short statusOffset;
 
     public int getType() {
         return type;
@@ -59,11 +59,11 @@ public class BattleSprite {
         this.animSpeed = animSpeed;
     }
 
-    public short getUnknown() {
-        return unknown;
+    public short getStatusOffset() {
+        return statusOffset;
     }
 
-    public void setUnknown(short unknown) {
-        this.unknown = unknown;
+    public void setStatusOffset(short statusOffset) {
+        this.statusOffset = statusOffset;
     }
 }

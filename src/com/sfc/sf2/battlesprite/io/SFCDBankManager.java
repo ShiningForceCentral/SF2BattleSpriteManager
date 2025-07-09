@@ -72,7 +72,7 @@ public class SFCDBankManager {
                     short animSpeed = getNextWord(data,0);
                     short unknown = getNextWord(data,2);
                     battlesprite.setAnimSpeed(animSpeed);
-                    battlesprite.setUnknown(unknown);
+                    battlesprite.setStatusOffset(unknown);
                     int palettesOffset = 4 + getNextWord(data,4);
                     int firstFrameOffset = 6 + getNextWord(data,6);
                     List<Color[]> paletteList = new ArrayList<Color[]>();
