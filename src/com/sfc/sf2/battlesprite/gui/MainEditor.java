@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.RowFilter;
 import javax.swing.UIManager;
@@ -209,7 +210,7 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,6 +218,7 @@ public class MainEditor extends javax.swing.JFrame {
         );
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
+        jPanel16.setMinimumSize(new java.awt.Dimension(100, 100));
 
         jLabel5.setText("Animation Speed :");
 
@@ -236,16 +238,17 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel16Layout.createSequentialGroup()
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField2))
-                        .addComponent(jLabel5))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,8 +304,10 @@ public class MainEditor extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +379,7 @@ public class MainEditor extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton18))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Disassembly", jPanel4);
@@ -622,7 +627,7 @@ public class MainEditor extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, Short.MAX_VALUE)
                         .addGap(3, 3, 3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -643,7 +648,7 @@ public class MainEditor extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Export to :"));
@@ -844,15 +849,15 @@ public class MainEditor extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,7 +878,7 @@ public class MainEditor extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, Short.MAX_VALUE)
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel15);
@@ -882,7 +887,7 @@ public class MainEditor extends javax.swing.JFrame {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -900,7 +905,7 @@ public class MainEditor extends javax.swing.JFrame {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(816, 573));
+        setSize(new java.awt.Dimension(939, 573));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -926,27 +931,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         battlespriteManager.importPng(jTextField11.getText(), jCheckBox1.isSelected());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
-        String outputBasePath = jTextField11.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        updateInterface(jTextField11);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -963,27 +948,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         battlespriteManager.importDisassembly(jTextField9.getText());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();   
-        String outputBasePath = jTextField9.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        updateInterface(jTextField9);
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
@@ -1016,15 +981,8 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if(jComboBox1.getSelectedItem()!=null){
-            Tile[] tiles = battlespriteManager.getTiles();
-            Color[][] palettes = battlespriteManager.getBattleSprite().getPalettes();
-            int selectedPalette = jComboBox1.getSelectedIndex();
-            for(int i=0;i<tiles.length;i++){
-                tiles[i].setPalette(palettes[selectedPalette]);
-            }
-            BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-            battlespriteLayout.setTiles(tiles);        
-            battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
+            BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();   
+            battlespriteLayout.setBattleSprite(battlespriteManager.getBattleSprite());
             jPanel2.removeAll();
             jPanel2.add(battlespriteLayout);
             jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
@@ -1047,27 +1005,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         battlespriteManager.importGif(jTextField12.getText(), jCheckBox2.isSelected());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
-        String outputBasePath = jTextField12.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        updateInterface(jTextField12);
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
@@ -1088,27 +1026,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
         battlespriteManager.importSFCDBank(jTextField10.getText(), jTextField14.getText(), jTextField17.getText(), (int)jSpinner1.getValue());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();   
-        String outputBasePath = jTextField9.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        updateInterface(jTextField9);
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
@@ -1135,6 +1053,28 @@ public class MainEditor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton23ActionPerformed
 
+    private void updateInterface(JTextField inputPathLabel) {
+        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
+        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getUnknown()));
+        jComboBox1.removeAllItems();
+        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
+            jComboBox1.addItem(String.valueOf(i));
+        }
+        jPanel2.removeAll();     
+        jPanel2.setLayout(new GridLayout(1,1));
+        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
+        battlespriteLayout.setBattleSprite(battlespriteManager.getBattleSprite());
+        jPanel2.add(battlespriteLayout);
+        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
+        jPanel2.revalidate();
+        jPanel2.repaint();   
+        String outputBasePath = inputPathLabel.getText();
+        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
+        jTextField13.setText(outputBasePath + ".bin");
+        jTextField15.setText(outputBasePath);
+        jTextField16.setText(outputBasePath);
+    }
+    
     /**
      * @param args the command line arguments
      */
