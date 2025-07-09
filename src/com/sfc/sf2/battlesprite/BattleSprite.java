@@ -35,6 +35,10 @@ public class BattleSprite {
         this.type = type;
     }
 
+    public int getTilesPerRow() {
+        return type == TYPE_ALLY ? 12 : 16;
+    }
+
     public Tile[][] getFrames() {
         return frames;
     }

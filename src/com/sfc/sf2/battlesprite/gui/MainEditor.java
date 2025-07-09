@@ -996,14 +996,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if(jComboBox1.getSelectedItem()!=null){
-            Tile[] tiles = battleSpriteManager.getTiles();
-            Color[][] palettes = battleSpriteManager.getBattleSprite().getPalettes();
-            int selectedPalette = jComboBox1.getSelectedIndex();
-            for(int i=0;i<tiles.length;i++){
-                tiles[i].setPalette(palettes[selectedPalette]);
-            }
-            battleSpriteLayout.setTiles(tiles);        
-            battleSpriteLayout.setBattlespriteType(battleSpriteManager.getBattleSprite().getType());
+            battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
             repaintTilesPanel();
         }  
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -1081,10 +1074,8 @@ public class MainEditor extends javax.swing.JFrame {
         for(int i=0;i<battleSpriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
         }
-        Tile[] tiles = battleSpriteManager.getTiles();
         jPanel2.setLayout(new GridLayout(1,1));
-        battleSpriteLayout.setTiles(tiles);
-        battleSpriteLayout.setBattlespriteType(battleSpriteManager.getBattleSprite().getType());
+        battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
         repaintTilesPanel();
         String outputBasePath = inputPathLabel.getText();
         outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
