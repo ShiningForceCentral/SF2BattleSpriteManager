@@ -5,15 +5,9 @@
  */
 package com.sfc.sf2.battlesprite.gui;
 
-import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
-import com.sfc.sf2.graphics.layout.DefaultLayout;
-import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.layout.BattleSpriteLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.io.File;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -23,14 +17,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
-import javax.swing.RowFilter;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -39,6 +25,7 @@ import javax.swing.table.TableRowSorter;
 public class MainEditor extends javax.swing.JFrame {
     
     BattleSpriteManager battlespriteManager = new BattleSpriteManager();
+    BattleSpriteLayout battleSpriteLayout = new BattleSpriteLayout();
     
     /**
      * Creates new form NewApplication
@@ -55,6 +42,7 @@ public class MainEditor extends javax.swing.JFrame {
             jFileChooser1.setCurrentDirectory(workingDirectory);
             jFileChooser2.setCurrentDirectory(workingDirectory);
             jTabbedPane1.remove(jPanel18);
+            jPanel2.add(battleSpriteLayout);
         } catch (URISyntaxException ex) {
             Logger.getLogger(MainEditor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -981,13 +969,9 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if(jComboBox1.getSelectedItem()!=null){
-            BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();   
-            battlespriteLayout.setBattleSprite(battlespriteManager.getBattleSprite());
-            jPanel2.removeAll();
-            jPanel2.add(battlespriteLayout);
-            jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
+            battleSpriteLayout.setCurrentPalette(jComboBox1.getSelectedIndex());
             jPanel2.revalidate();
-            jPanel2.repaint(); 
+            jPanel2.repaint();
         }  
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -1060,12 +1044,8 @@ public class MainEditor extends javax.swing.JFrame {
         for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
         }
-        jPanel2.removeAll();     
+        battleSpriteLayout.setBattleSprite(battlespriteManager.getBattleSprite());
         jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setBattleSprite(battlespriteManager.getBattleSprite());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
         jPanel2.revalidate();
         jPanel2.repaint();   
         String outputBasePath = inputPathLabel.getText();
