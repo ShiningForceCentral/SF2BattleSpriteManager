@@ -24,9 +24,8 @@ public class BattleSpriteManager {
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Disassembly imported.");
     }
     
-    public void exportDisassembly(String filepath, String animSpeed, String unknown){
+    public void exportDisassembly(String filepath){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Exporting disassembly ...");
-        battlesprite.setAnimSpeed(Integer.parseInt(animSpeed));
         DisassemblyManager.exportDisassembly(battlesprite, filepath);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Disassembly exported.");        
     }   
