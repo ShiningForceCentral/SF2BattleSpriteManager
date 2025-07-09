@@ -707,12 +707,11 @@ public class MainEditor extends javax.swing.JFrame {
 
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
 
-        jLabel5.setText("Animation Speed :");
+        jLabel5.setText("Idle anim speed :");
 
         jLabel6.setText("Status marker offset :");
 
         jCheckBox3.setText("Preview");
-        jCheckBox3.setEnabled(false);
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox3ActionPerformed(evt);
@@ -758,23 +757,25 @@ public class MainEditor extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox4))
                     .addComponent(jLabel6)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jCheckBox3)))
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBox3)
+                            .addComponent(jCheckBox4))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
@@ -1062,7 +1063,8 @@ public class MainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        // TODO add your handling code here:
+        battleSpriteLayout.setPreviewAnimSpeed(jCheckBox3.isSelected());
+        repaintTilesPanel();
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
@@ -1077,8 +1079,11 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jSpinner4StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner4StateChanged
         BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null)
+        if (battleSprite != null) {
             battleSprite.setAnimSpeed((int)jSpinner4.getValue());
+            if (battleSpriteLayout.getPreviewAnimSpeed())
+                battleSpriteLayout.setPreviewAnimSpeed(true);   //Force timer to reset
+        }
     }//GEN-LAST:event_jSpinner4StateChanged
 
     private void jSpinner3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner3StateChanged
@@ -1104,7 +1109,8 @@ public class MainEditor extends javax.swing.JFrame {
         }
         jPanel2.setLayout(new GridLayout(1,1));
         battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
-        
+        battleSpriteLayout.setPreviewAnimSpeed(false);
+        jCheckBox3.setSelected(false);
         jSpinner4.setValue(battleSpriteManager.getBattleSprite().getAnimSpeed());
         jSpinner3.setValue(battleSpriteManager.getBattleSprite().getStatusOffsetX());
         jSpinner2.setValue(battleSpriteManager.getBattleSprite().getStatusOffsetY());
