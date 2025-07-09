@@ -7,9 +7,11 @@ package com.sfc.sf2.battlesprite.layout;
 
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.graphics.Tile;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
 import javax.swing.JPanel;
@@ -21,24 +23,27 @@ import javax.swing.JPanel;
 public class BattleSpriteLayout extends JPanel {
     
     private static final int ALLY_TILES_PER_ROW = 12;
-    private static final int ENEMY_TILES_PER_ROW = 16;
-    
-    private static final int DEFAULT_TILES_PER_ROW = ALLY_TILES_PER_ROW;
-    
+    private static final int ENEMY_TILES_PER_ROW = 16;    
+    private static final int DEFAULT_TILES_PER_ROW = ALLY_TILES_PER_ROW;    
     private int tilesPerRow = DEFAULT_TILES_PER_ROW;
+    
+    private int displaySize = 1;
+    private boolean showGrid = false;
     
     private int battlespriteType;
     private Tile[] tiles;
     
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);   
+        super.paintComponent(g);
         g.drawImage(buildImage(), 0, 0, this);       
     }
     
     public BufferedImage buildImage(){
         BufferedImage image = buildImage(this.tiles,this.tilesPerRow, battlespriteType, false);
+        image = resize(image);
         setSize(image.getWidth(), image.getHeight());
+        if (showGrid) { drawGrid(image); }
         return image;
     }
     
@@ -85,6 +90,37 @@ public class BattleSpriteLayout extends JPanel {
                 }
         }            
         return image;
+    }
+    
+    private void drawGrid(BufferedImage image) {
+        Graphics2D graphics = (Graphics2D)image.getGraphics();
+        graphics.setColor(Color.BLACK);
+        graphics.setStroke(new BasicStroke(1));
+        int x = 0;
+        int y = 0;
+        while (x < image.getWidth()) {
+            graphics.drawLine(x, 0, x, image.getHeight());
+            x += 8*displaySize;
+        }
+        graphics.drawLine(x-1, 0, x-1, image.getHeight());
+        while (y < image.getHeight()) {
+            graphics.setStroke(new BasicStroke((y % (96*displaySize) == 0) ? 3 : 1));
+            graphics.drawLine(0, y, image.getWidth(), y);
+            y += 8*displaySize;
+        }
+        graphics.setStroke(new BasicStroke(3));
+        graphics.drawLine(0, y-1, image.getWidth(), y-1);
+        graphics.dispose();
+    }
+    
+    private BufferedImage resize(BufferedImage image) {
+        if (displaySize == 1)
+            return image;
+        BufferedImage newImage = new BufferedImage(image.getWidth()*displaySize, image.getHeight()*displaySize, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = newImage.getGraphics();
+        g.drawImage(image, 0, 0, image.getWidth()*displaySize, image.getHeight()*displaySize, null);
+        g.dispose();
+        return newImage;
     }
     
     private static IndexColorModel buildIndexColorModel(Color[] colors){
@@ -135,5 +171,18 @@ public class BattleSpriteLayout extends JPanel {
     public void setTilesPerRow(int tilesPerRow) {
         this.tilesPerRow = tilesPerRow;
     }
-    
+
+    public int getDisplaySize() {
+        return displaySize;
+    }
+
+    public void setDisplaySize(int displaySize) {
+        this.displaySize = displaySize;
+        this.revalidate();
+    }
+
+    public void setShowGrid(boolean showGrid) {
+        this.showGrid = showGrid;
+        this.revalidate();
+    }
 }
