@@ -5,11 +5,9 @@
  */
 package com.sfc.sf2.battlesprite.gui;
 
-import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.battlesprite.BattleSpriteManager;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.battlesprite.layout.BattleSpriteLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.PrintStream;
@@ -26,7 +24,7 @@ import javax.swing.JTextField;
  * @author wiz
  */
 public class MainEditor extends javax.swing.JFrame {
-    
+
     BattleSpriteManager battleSpriteManager = new BattleSpriteManager();
     BattleSpriteLayout battleSpriteLayout = new BattleSpriteLayout();
     
@@ -996,7 +994,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if(jComboBox1.getSelectedItem()!=null){
-            battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
+            battleSpriteLayout.setCurrentPalette(jComboBox1.getSelectedIndex());
             repaintTilesPanel();
         }  
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -1074,7 +1072,7 @@ public class MainEditor extends javax.swing.JFrame {
         for(int i=0;i<battleSpriteManager.getBattleSprite().getPalettes().length;i++){
             jComboBox1.addItem(String.valueOf(i));
         }
-        jPanel2.setLayout(new GridLayout(1,1));
+        battleSpriteLayout.setLayout(new GridLayout(1,1));
         battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
         repaintTilesPanel();
         String outputBasePath = inputPathLabel.getText();

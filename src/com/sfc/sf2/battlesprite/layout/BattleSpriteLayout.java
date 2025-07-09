@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 public class BattleSpriteLayout extends JPanel {
     
     private BattleSprite battleSprite;
+    private int currentPalette;
     
     private int displaySize = 1;
     private boolean showGrid = false;
@@ -32,14 +33,14 @@ public class BattleSpriteLayout extends JPanel {
     }
     
     public BufferedImage buildImage(){
-        BufferedImage image = buildImage(battleSprite);
+        BufferedImage image = buildImage(battleSprite, currentPalette);
         image = resize(image);
         setSize(image.getWidth(), image.getHeight());
         if (showGrid) { drawGrid(image); }
         return image;
     }
     
-    public static BufferedImage buildImage(BattleSprite battleSprite){
+    public static BufferedImage buildImage(BattleSprite battleSprite, int paletteIndex) {
         
         int tilesPerRow = battleSprite.getTilesPerRow();
         int frames = battleSprite.getFrames().length;
@@ -48,11 +49,14 @@ public class BattleSpriteLayout extends JPanel {
         BufferedImage image;
         image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
+        Color[] palette = battleSprite.getPalettes()[paletteIndex];
         for(int f = 0; f < frames; f++) {
             Tile[] frameTiles = battleSprite.getFrames()[f];
             for(int t = 0; t < frameTiles.length; t++) {
                 int x = (t%tilesPerRow)*8;
                 int y = (f*12 + t/tilesPerRow)*8;
+                frameTiles[t].setPalette(palette);
+                frameTiles[t].clearIndexedColorImage();
                 graphics.drawImage(frameTiles[t].getIndexedColorImage(), x, y, null);
             }
         }
@@ -102,6 +106,14 @@ public class BattleSpriteLayout extends JPanel {
 
     public void setBattleSprite(BattleSprite battleSprite) {
         this.battleSprite = battleSprite;
+    }
+    
+    public int getCurrentPalette() {
+        return currentPalette;
+    }
+
+    public void setCurrentPalette(int currentPalette) {
+        this.currentPalette = currentPalette;
     }
     
     public int getDisplaySize() {
