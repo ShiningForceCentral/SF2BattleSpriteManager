@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 public class BattleSpriteLayout extends JPanel {
         
     private BattleSprite battleSprite;
-    private Tile[] tiles;
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -28,17 +27,17 @@ public class BattleSpriteLayout extends JPanel {
     }
     
     public BufferedImage buildImage(){
-        BufferedImage image = buildImage(battleSprite, false);
+        BufferedImage image = buildImage(battleSprite);
         setSize(image.getWidth(), image.getHeight());
         return image;
     }
     
-    public static BufferedImage buildImage(BattleSprite battleSprite, boolean pngExport){
+    public static BufferedImage buildImage(BattleSprite battleSprite){
         
         int tilesPerRow = battleSprite.getTilesPerRow();
         int frames = battleSprite.getFrames().length;
-        int imageWidth = 16*8;
-        int imageHeight = frames*16*8;
+        int imageWidth = tilesPerRow*8;
+        int imageHeight = frames*12*8;
         BufferedImage image;
         image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
@@ -46,7 +45,7 @@ public class BattleSpriteLayout extends JPanel {
             Tile[] frameTiles = battleSprite.getFrames()[f];
             for(int t = 0; t < frameTiles.length; t++) {
                 int x = (t%tilesPerRow)*8;
-                int y = (f*16 + t/tilesPerRow)*8;
+                int y = (f*12 + t/tilesPerRow)*8;
                 graphics.drawImage(frameTiles[t].getIndexedColorImage(), x, y, null);
             }
         }
