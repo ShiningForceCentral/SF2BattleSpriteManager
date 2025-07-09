@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.RowFilter;
 import javax.swing.UIManager;
@@ -935,27 +936,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         battlespriteManager.importPng(jTextField11.getText(), jCheckBox1.isSelected());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getStatusOffset()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
-        String outputBasePath = jTextField11.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        UpdateInterface(jTextField11);
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -968,27 +949,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         battlespriteManager.importDisassembly(jTextField9.getText());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getStatusOffset()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();   
-        String outputBasePath = jTextField9.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        UpdateInterface(jTextField9);
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
@@ -1042,27 +1003,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         battlespriteManager.importGif(jTextField12.getText(), jCheckBox2.isSelected());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getStatusOffset()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();  
-        String outputBasePath = jTextField12.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        UpdateInterface(jTextField12);
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
@@ -1079,27 +1020,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
         battlespriteManager.importSFCDBank(jTextField10.getText(), jTextField14.getText(), jTextField17.getText(), (int)jSpinner1.getValue());
-        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getStatusOffset()));
-        jComboBox1.removeAllItems();
-        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
-            jComboBox1.addItem(String.valueOf(i));
-        }
-        jPanel2.removeAll();
-        Tile[] tiles = battlespriteManager.getTiles();        
-        jPanel2.setLayout(new GridLayout(1,1));
-        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
-        battlespriteLayout.setTiles(tiles);
-        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
-        jPanel2.add(battlespriteLayout);
-        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
-        jPanel2.revalidate();
-        jPanel2.repaint();   
-        String outputBasePath = jTextField9.getText();
-        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
-        jTextField13.setText(outputBasePath);
-        jTextField15.setText(outputBasePath);
-        jTextField16.setText(outputBasePath);
+        UpdateInterface(jTextField10);
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
@@ -1128,6 +1049,30 @@ public class MainEditor extends javax.swing.JFrame {
             battleSprite.setStatusOffset(Short.parseShort(jTextField2.getText()));
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void UpdateInterface(JTextField inputPathLabel) {
+        jTextField1.setText(String.valueOf(battlespriteManager.getBattleSprite().getAnimSpeed()));
+        jTextField2.setText(String.valueOf(battlespriteManager.getBattleSprite().getStatusOffset()));
+        jComboBox1.removeAllItems();
+        for(int i=0;i<battlespriteManager.getBattleSprite().getPalettes().length;i++){
+            jComboBox1.addItem(String.valueOf(i));
+        }
+        jPanel2.removeAll();
+        Tile[] tiles = battlespriteManager.getTiles();        
+        jPanel2.setLayout(new GridLayout(1,1));
+        BattleSpriteLayout battlespriteLayout = new BattleSpriteLayout();
+        battlespriteLayout.setTiles(tiles);
+        battlespriteLayout.setBattlespriteType(battlespriteManager.getBattleSprite().getType());
+        jPanel2.add(battlespriteLayout);
+        jPanel2.setSize(battlespriteLayout.getWidth(), battlespriteLayout.getHeight());
+        jPanel2.revalidate();
+        jPanel2.repaint();   
+        String outputBasePath = inputPathLabel.getText();
+        outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
+        jTextField13.setText(outputBasePath);
+        jTextField15.setText(outputBasePath);
+        jTextField16.setText(outputBasePath);
+    }
+    
     /**
      * @param args the command line arguments
      */
