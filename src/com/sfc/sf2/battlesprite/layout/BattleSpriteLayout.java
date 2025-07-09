@@ -26,6 +26,7 @@ public class BattleSpriteLayout extends JPanel {
     
     private int displaySize = 1;
     private boolean showGrid = false;
+    private boolean showStatusMarker = false;
     
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -33,14 +34,14 @@ public class BattleSpriteLayout extends JPanel {
     }
     
     public BufferedImage buildImage(){
-        BufferedImage image = buildImage(battleSprite, currentPalette);
+        BufferedImage image = drawBattleSprites();
         image = resize(image);
         setSize(image.getWidth(), image.getHeight());
         if (showGrid) { drawGrid(image); }
         return image;
     }
     
-    public static BufferedImage buildImage(BattleSprite battleSprite, int paletteIndex) {
+    public BufferedImage drawBattleSprites() {
         
         int tilesPerRow = battleSprite.getTilesPerRow();
         int frames = battleSprite.getFrames().length;
@@ -48,8 +49,8 @@ public class BattleSpriteLayout extends JPanel {
         int imageHeight = frames*12*8;
         BufferedImage image;
         image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics graphics = image.getGraphics();
-        Color[] palette = battleSprite.getPalettes()[paletteIndex];
+        Graphics2D graphics = (Graphics2D)image.getGraphics();
+        Color[] palette = battleSprite.getPalettes()[currentPalette];
         for(int f = 0; f < frames; f++) {
             Tile[] frameTiles = battleSprite.getFrames()[f];
             for(int t = 0; t < frameTiles.length; t++) {
@@ -58,6 +59,9 @@ public class BattleSpriteLayout extends JPanel {
                 frameTiles[t].setPalette(palette);
                 frameTiles[t].clearIndexedColorImage();
                 graphics.drawImage(frameTiles[t].getIndexedColorImage(), x, y, null);
+            }
+            if (showStatusMarker) {
+                drawStatusIcon(graphics, f);
             }
         }
         graphics.dispose();
@@ -83,6 +87,21 @@ public class BattleSpriteLayout extends JPanel {
         graphics.setStroke(new BasicStroke(3));
         graphics.drawLine(0, y-1, image.getWidth(), y-1);
         graphics.dispose();
+    }
+    
+    private void drawStatusIcon(Graphics2D graphics, int frameNumber) {
+        int x = battleSprite.getStatusOffsetX();
+        int y = battleSprite.getStatusOffsetY() + frameNumber*12*8;
+        graphics.setColor(Color.BLACK);
+        graphics.setStroke(new BasicStroke(5));
+        graphics.drawLine(x-5, y-5, x+5, y+5);
+        graphics.drawLine(x-5, y+5, x+5, y-5);
+        
+        graphics.setColor(Color.YELLOW);
+        graphics.setStroke(new BasicStroke(3));
+        graphics.drawLine(x-5, y-5, x+5, y+5);
+        graphics.drawLine(x-5, y+5, x+5, y-5);
+        graphics.setColor(Color.WHITE);
     }
     
     private BufferedImage resize(BufferedImage image) {
@@ -126,5 +145,9 @@ public class BattleSpriteLayout extends JPanel {
 
     public void setShowGrid(boolean showGrid) {
         this.showGrid = showGrid;
+    }
+
+    public void setShowStatusMarker(boolean showStatusMarker) {
+        this.showStatusMarker = showStatusMarker;
     }
 }

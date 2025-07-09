@@ -714,7 +714,7 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Status icon offset :");
+        jLabel6.setText("Status marker offset :");
 
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -731,7 +731,7 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox4.setText("Preview");
+        jCheckBox4.setText("Show");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox4ActionPerformed(evt);
@@ -751,11 +751,11 @@ public class MainEditor extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField1))
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1051,7 +1051,8 @@ public class MainEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
-        // TODO add your handling code here:
+        battleSpriteLayout.setShowStatusMarker(jCheckBox4.isSelected());
+        repaintTilesPanel();
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -1060,8 +1061,10 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null)
+        if (battleSprite != null) {
             battleSprite.setStatusOffsetX(Byte.parseByte(jTextField2.getText()));
+            repaintTilesPanel();
+        }
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
@@ -1076,8 +1079,10 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
-        if (battleSprite != null)
+        if (battleSprite != null) {
             battleSprite.setStatusOffsetY(Byte.parseByte(jTextField3.getText()));
+            repaintTilesPanel();
+        }
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void updateInterface(JTextField inputPathLabel) {
