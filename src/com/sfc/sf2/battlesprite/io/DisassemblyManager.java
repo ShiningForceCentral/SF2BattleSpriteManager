@@ -37,10 +37,9 @@ public class DisassemblyManager {
             if(path.toFile().exists()){
                 byte[] data = Files.readAllBytes(path);
                 if(data.length>42){
-                    short animSpeed = getNextWord(data,0);
-                    short statusOffset = getNextWord(data,2);
-                    battlesprite.setAnimSpeed(animSpeed);
-                    battlesprite.setStatusOffset(statusOffset);
+                    battlesprite.setAnimSpeed(getNextWord(data,0));
+                    battlesprite.setStatusOffsetX(getNextByte(data,2));
+                    battlesprite.setStatusOffsetY(getNextByte(data,3));
                     int palettesOffset = 4 + getNextWord(data,4);
                     int firstFrameOffset = 6 + getNextWord(data,6);
                     List<Color[]> paletteList = new ArrayList<Color[]>();
@@ -88,7 +87,8 @@ public class DisassemblyManager {
         System.out.println("com.sfc.sf2.battlesprite.io.DisassemblyManager.exportDisassembly() - Exporting disassembly ...");
         try{
                 short animSpeed = (short)(battlesprite.getAnimSpeed()&0xFFFF);
-                short statusOffset = battlesprite.getStatusOffset();
+                byte statusOffsetX = battlesprite.getStatusOffsetX();
+                byte statusOffsetY = battlesprite.getStatusOffsetY();
                 
                 Color[][] palettes = battlesprite.getPalettes();
                 byte[][] paletteBytes = new byte[palettes.length][];
@@ -126,12 +126,12 @@ public class DisassemblyManager {
 
                 byte[] newBattleSpriteFileBytes = new byte[totalSize];
                         
-                newBattleSpriteFileBytes[0] = (byte) ((animSpeed&0xFF00) >> 8);
-                newBattleSpriteFileBytes[1] = (byte) (animSpeed&0xFF); 
-                newBattleSpriteFileBytes[2] = (byte) ((statusOffset&0xFF00) >> 8);
-                newBattleSpriteFileBytes[3] = (byte) (statusOffset&0xFF); 
-                newBattleSpriteFileBytes[4] = (byte) ((palettesOffset&0xFF00) >> 8);
-                newBattleSpriteFileBytes[5] = (byte) (palettesOffset&0xFF); 
+                newBattleSpriteFileBytes[0] = (byte)((animSpeed&0xFF00) >> 8);
+                newBattleSpriteFileBytes[1] = (byte)(animSpeed&0xFF); 
+                newBattleSpriteFileBytes[2] = statusOffsetX;
+                newBattleSpriteFileBytes[3] = statusOffsetY; 
+                newBattleSpriteFileBytes[4] = (byte)((palettesOffset&0xFF00) >> 8);
+                newBattleSpriteFileBytes[5] = (byte)(palettesOffset&0xFF); 
                 for(int i=0;i<frameOffsets.length;i++){
                     newBattleSpriteFileBytes[6+i*2] =  (byte) ((frameOffsets[i]&0xFF00) >> 8);
                     newBattleSpriteFileBytes[6+i*2+1] = (byte) (frameOffsets[i]&0xFF); 

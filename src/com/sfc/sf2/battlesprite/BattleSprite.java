@@ -19,13 +19,12 @@ public class BattleSprite {
     
     private int type;
     
-    private Tile[][] frames;
-    
+    private Tile[][] frames;    
     private Color[][] palettes;
     
-    private int animSpeed;
-    
-    private short statusOffset;
+    private int animSpeed;    
+    private byte statusOffsetX;
+    private byte statusOffsetY;
 
     public int getType() {
         return type;
@@ -63,11 +62,19 @@ public class BattleSprite {
         this.animSpeed = animSpeed;
     }
 
-    public short getStatusOffset() {
-        return statusOffset;
+    public byte getStatusOffsetX() {
+        return statusOffsetX;
     }
 
-    public void setStatusOffset(short statusOffset) {
-        this.statusOffset = statusOffset;
+    public void setStatusOffsetX(byte statusOffsetX) {
+        this.statusOffsetX = statusOffsetX;
+    }
+
+    public byte getStatusOffsetY() {
+        return statusOffsetY;
+    }
+
+    public void setStatusOffsetY(byte statusOffsetY) {
+        this.statusOffsetY = statusOffsetY;
     }
 }

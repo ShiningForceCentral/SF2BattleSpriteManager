@@ -6,13 +6,9 @@
 package com.sfc.sf2.battlesprite.io;
 
 import com.sfc.sf2.graphics.Tile;
-import com.sfc.sf2.graphics.compressed.BasicGraphicsDecoder;
-import com.sfc.sf2.graphics.compressed.BasicGraphicsEncoder;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.graphics.compressed.StackGraphicsDecoder;
-import com.sfc.sf2.graphics.compressed.StackGraphicsEncoder;
 import com.sfc.sf2.palette.graphics.PaletteDecoder;
-import com.sfc.sf2.palette.graphics.PaletteEncoder;
 import java.awt.Color;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,10 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -69,10 +62,9 @@ public class SFCDBankManager {
                 byte[] data = new byte[0x4000];
                 System.arraycopy(fileData, (int)pointer, data, 0, 0x4000);
                 if(data.length>42){
-                    short animSpeed = getNextWord(data,0);
-                    short unknown = getNextWord(data,2);
-                    battlesprite.setAnimSpeed(animSpeed);
-                    battlesprite.setStatusOffset(unknown);
+                    battlesprite.setAnimSpeed(getNextWord(data,0));
+                    battlesprite.setStatusOffsetX(getNextByte(data,2));
+                    battlesprite.setStatusOffsetY(getNextByte(data,3));
                     int palettesOffset = 4 + getNextWord(data,4);
                     int firstFrameOffset = 6 + getNextWord(data,6);
                     List<Color[]> paletteList = new ArrayList<Color[]>();

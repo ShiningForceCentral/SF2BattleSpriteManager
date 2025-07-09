@@ -142,6 +142,7 @@ public class MainEditor extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jCheckBox3 = new javax.swing.JCheckBox();
         jCheckBox4 = new javax.swing.JCheckBox();
+        jTextField3 = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -737,6 +738,13 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -751,7 +759,9 @@ public class MainEditor extends javax.swing.JFrame {
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jCheckBox3)
@@ -770,7 +780,8 @@ public class MainEditor extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jCheckBox4))
+                    .addComponent(jCheckBox4)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -1050,7 +1061,7 @@ public class MainEditor extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
         if (battleSprite != null)
-            battleSprite.setStatusOffset(Short.parseShort(jTextField2.getText()));
+            battleSprite.setStatusOffsetX(Byte.parseByte(jTextField2.getText()));
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
@@ -1063,6 +1074,12 @@ public class MainEditor extends javax.swing.JFrame {
         repaintTilesPanel();
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        BattleSprite battleSprite = battleSpriteManager.getBattleSprite();
+        if (battleSprite != null)
+            battleSprite.setStatusOffsetY(Byte.parseByte(jTextField3.getText()));
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
     private void updateInterface(JTextField inputPathLabel) {
         jComboBox1.removeAllItems();
         for(int i=0;i<battleSpriteManager.getBattleSprite().getPalettes().length;i++){
@@ -1070,15 +1087,17 @@ public class MainEditor extends javax.swing.JFrame {
         }
         jPanel2.setLayout(new GridLayout(1,1));
         battleSpriteLayout.setBattleSprite(battleSpriteManager.getBattleSprite());
-        repaintTilesPanel();
         
         jTextField1.setText(String.valueOf(battleSpriteManager.getBattleSprite().getAnimSpeed()));
-        jTextField2.setText(String.valueOf(battleSpriteManager.getBattleSprite().getStatusOffset()));
+        jTextField2.setText(String.valueOf(battleSpriteManager.getBattleSprite().getStatusOffsetX()));
+        jTextField3.setText(String.valueOf(battleSpriteManager.getBattleSprite().getStatusOffsetY()));
         String outputBasePath = inputPathLabel.getText();
         outputBasePath = outputBasePath.substring(0, outputBasePath.lastIndexOf("."));
         jTextField13.setText(outputBasePath + ".bin");
         jTextField15.setText(outputBasePath);
         jTextField16.setText(outputBasePath);
+        
+        repaintTilesPanel();
     }
     
     private void repaintTilesPanel() {
@@ -1211,6 +1230,7 @@ public class MainEditor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
