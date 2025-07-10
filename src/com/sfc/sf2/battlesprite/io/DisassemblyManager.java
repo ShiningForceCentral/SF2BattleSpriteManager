@@ -169,28 +169,37 @@ public class DisassemblyManager {
            35 39 43 47                  . 143
            36 40 44 48                140 144
         */
-        int numberofColumns = isAllyType ? 3 : 4;
+        // \/ Edit these variables \/
+        int blockColumnCount = isAllyType ? 3 : 4;
+        int blockRowCount = 3;
+        int tilesPerBlock = 4;
+        // /\ Edit these variables /\
+        int blockTotalTiles = tilesPerBlock*tilesPerBlock;
         Tile[] newTiles = new Tile[tiles.length];
         for (int i = 0; i < tiles.length; i++) {
-            int blockColumn = (i/4) % numberofColumns;
-            int blockRow = i/(4*numberofColumns * 4);
-            int tileColumn = i%4;
-            int tileRow = (i/(4*numberofColumns)) % 4;
-            newTiles[i] = tiles[blockColumn*48 + blockRow*16 + tileColumn*4 + tileRow];
+            int bc = (i/tilesPerBlock) % blockColumnCount;
+            int br = i/(blockColumnCount*blockTotalTiles);
+            int tc = i%tilesPerBlock;
+            int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
+            newTiles[i] = tiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr];
         }
         return newTiles;
     }
     
     private static Tile[] reorderTilesForDisasssembly(Tile[] tiles, boolean isAllyType) {
-        
-        int numberofColumns = isAllyType ? 3 : 4;
+        // \/ Edit these variables \/
+        int blockColumnCount = isAllyType ? 3 : 4;
+        int blockRowCount = 3;
+        int tilesPerBlock = 4;
+        // /\ Edit these variables /\
+        int blockTotalTiles = tilesPerBlock*tilesPerBlock;
         Tile[] newTiles = new Tile[tiles.length];
         for (int i = 0; i < tiles.length; i++) {
-            int blockColumn = (i/4) % numberofColumns;
-            int blockRow = i/(4*numberofColumns * 4);
-            int tileColumn = i%4;
-            int tileRow = (i/(4*numberofColumns)) % 4;
-            newTiles[blockColumn*48 + blockRow*16 + tileColumn*4 + tileRow] = tiles[i];
+            int bc = (i/tilesPerBlock) % blockColumnCount;
+            int br = i/(blockColumnCount*blockTotalTiles);
+            int tc = i%tilesPerBlock;
+            int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
+            newTiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr] = tiles[i];
         }
         return newTiles;
     }
@@ -210,7 +219,5 @@ public class DisassemblyManager {
         bb.put(data[cursor]);
         byte b = bb.get(0);
         return b;
-    }    
-
-    
+    }
 }
