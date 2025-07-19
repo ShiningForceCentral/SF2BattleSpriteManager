@@ -6,8 +6,7 @@
 package com.sfc.sf2.battlesprite;
 
 import com.sfc.sf2.battlesprite.io.DisassemblyManager;
-import com.sfc.sf2.battlesprite.io.PngManager;
-import com.sfc.sf2.battlesprite.io.GifManager;
+import com.sfc.sf2.battlesprite.io.RawImageManager;
 import com.sfc.sf2.battlesprite.io.SFCDBankManager;
 
 /**
@@ -28,34 +27,32 @@ public class BattleSpriteManager {
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Exporting disassembly ...");
         DisassemblyManager.exportDisassembly(battlesprite, filepath);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Disassembly exported.");        
-    }   
-    
+    }
     
     public void importPng(String filepath, boolean usePngPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importPng() - Importing PNG ...");
-        battlesprite = PngManager.importPng(filepath, battlesprite, usePngPalette);
+        battlesprite = RawImageManager.importImage(filepath, battlesprite, usePngPalette);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importPng() - PNG imported.");
     }
     
     public void exportPng(String filepath, int selectedPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportPng() - Exporting PNG ...");
-        PngManager.exportPng(battlesprite, filepath, selectedPalette);
+        RawImageManager.exportImage(battlesprite, filepath, selectedPalette, com.sfc.sf2.graphics.io.RawImageManager.FILE_FORMAT_PNG);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportPng() - PNG exported.");       
     }
     
-    
     public void importGif(String filepath, boolean useGifPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importGif() - Importing GIF ...");
-        battlesprite = GifManager.importGif(filepath, battlesprite, useGifPalette);
+        battlesprite = RawImageManager.importImage(filepath, battlesprite, useGifPalette);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importGif() - GIF imported.");
     }
     
     public void exportGif(String filepath, int selectedPalette){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportGif() - Exporting GIF ...");
-        GifManager.exportGif(battlesprite, filepath, selectedPalette);
+        RawImageManager.exportImage(battlesprite, filepath, selectedPalette, com.sfc.sf2.graphics.io.RawImageManager.FILE_FORMAT_GIF);
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.exportGif() - GIF exported.");       
     }
-       
+    
     public void importSFCDBank(String filePath, String loadingOffset, String pointerTableOffset, int battleSpriteIndex){
         System.out.println("com.sfc.sf2.battlesprite.BattleSpriteManager.importDisassembly() - Importing disassembly ...");
         int ldOffset = Integer.parseInt(loadingOffset, 16);

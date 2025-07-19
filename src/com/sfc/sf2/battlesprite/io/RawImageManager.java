@@ -23,10 +23,10 @@ import java.util.logging.Logger;
  *
  * @author wiz
  */
-public class PngManager {
+public class RawImageManager {
     
-    public static BattleSprite importPng(String filepath, BattleSprite battleSprite, boolean usePngPalette){
-        System.out.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - Importing PNG files ...");
+    public static BattleSprite importImage(String filepath, BattleSprite battleSprite, boolean usePngPalette){
+        System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - Importing Image files ...");
         BattleSprite battlesprite = new BattleSprite();
         try{
             List<Tile[]> frames = new ArrayList<Tile[]>();
@@ -36,7 +36,7 @@ public class PngManager {
             File directory = new File(dir);
             File[] files = directory.listFiles();
             for(File f : files){
-                if(f.getName().startsWith(pattern + "-frame") && f.getName().endsWith(".png")){
+                if(f.getName().startsWith(pattern + "-frame")){
                     Tile[] frame = com.sfc.sf2.graphics.io.RawImageManager.importImage(f.getAbsolutePath());
                     frames.add(frame);
                 }else if(f.getName().startsWith(pattern + "-palette")){
@@ -46,9 +46,9 @@ public class PngManager {
                 }
             }
             if(frames.isEmpty()){
-                System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - ERROR : no frame imported. PNG files missing for this pattern ?");
+                System.err.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - ERROR : no frame imported. Image files missing for this pattern ?");
             } else{
-                System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - " + frames.size() + " : " + frames);
+                System.err.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - " + frames.size() + " : " + frames);
                 if(frames.get(0).length>144){
                     battlesprite.setType(BattleSprite.TYPE_ENEMY);
                 }
@@ -59,20 +59,20 @@ public class PngManager {
                 battlesprite.setPalettes(palettes.toArray(new Color[palettes.size()][]));
             }
         }catch(Exception e){
-             System.err.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - Error while parsing graphics data : "+e);
+             System.err.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - Error while parsing graphics data : "+e);
              e.printStackTrace();
         }        
-        System.out.println("com.sfc.sf2.battlesprite.io.PngManager.importPng() - PNG files imported.");
+        System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - PNG files imported.");
         return battlesprite;                
     }
     
-    public static void exportPng(BattleSprite battlesprite, String filepath, int selectedPalette){
+    public static void exportImage(BattleSprite battlesprite, String filepath, int selectedPalette, int fileFormat){
         try {
-            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - Exporting PNG files and palettes ...");
+            System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.exportImage() - Exporting Image files and palettes ...");
             Tile[][] frames = battlesprite.getFrames();
             for(int i=0;i<frames.length;i++){
-                String framePath = filepath + "-frame-" + String.valueOf(i) + ".png";
-                com.sfc.sf2.graphics.io.RawImageManager.exportImage(frames[i], framePath, battlesprite.getType() == BattleSprite.TYPE_ALLY ? 12 : 16, com.sfc.sf2.graphics.io.RawImageManager.FILE_FORMAT_PNG);
+                String framePath = filepath + "-frame-" + String.valueOf(i) + com.sfc.sf2.graphics.io.RawImageManager.GetFileExtensionString(fileFormat);
+                com.sfc.sf2.graphics.io.RawImageManager.exportImage(frames[i], framePath, battlesprite.getType() == BattleSprite.TYPE_ALLY ? 12 : 16, fileFormat);
             }
             Color[][] palettes = battlesprite.getPalettes();
             for(int i=0;i<palettes.length;i++){
@@ -84,9 +84,9 @@ public class PngManager {
                 Files.write(graphicsFilePath,palette);
             }
                            
-            System.out.println("com.sfc.sf2.battlesprite.io.PngManager.exportPng() - PNG files and palettes exported.");
+            System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.exportImage() - Image files and palettes exported.");
         } catch (Exception ex) {
-            Logger.getLogger(PngManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RawImageManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
