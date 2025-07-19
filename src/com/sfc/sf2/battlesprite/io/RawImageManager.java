@@ -10,7 +10,10 @@ import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.palette.graphics.PaletteDecoder;
 import com.sfc.sf2.palette.graphics.PaletteEncoder;
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,6 +61,20 @@ public class RawImageManager {
                 battlesprite.setFrames(frames.toArray(new Tile[frames.size()][]));
                 battlesprite.setPalettes(palettes.toArray(new Color[palettes.size()][]));
             }
+            String metaPath = filepath + ".meta";
+            File inputFile = new File(metaPath);
+            if (inputFile.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+                String data = reader.readLine();
+                data = data.substring(data.indexOf(":")+1).trim();
+                battlesprite.setAnimSpeed(Short.parseShort(data));
+                data = reader.readLine();
+                data = data.substring(data.indexOf(":")+1).trim();
+                String[] statusOffset = data.split(",");
+                battlesprite.setStatusOffsetX(Byte.parseByte(statusOffset[0].trim()));
+                battlesprite.setStatusOffsetY(Byte.parseByte(statusOffset[1].trim()));
+                reader.close();
+            }
         }catch(Exception e){
              System.err.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - Error while parsing graphics data : "+e);
              e.printStackTrace();
@@ -83,6 +100,14 @@ public class RawImageManager {
                 Path graphicsFilePath = Paths.get(palettePath);
                 Files.write(graphicsFilePath,palette);
             }
+            String metaPath = filepath + ".meta";
+            StringBuilder sb = new StringBuilder();
+            sb.append("Anim Speed: " + battlesprite.getAnimSpeed() + "\n");
+            sb.append("Status Offset: " + battlesprite.getStatusOffsetX() + ", " + battlesprite.getStatusOffsetY() + "\n");
+            File outputfile = new File(metaPath);
+            FileWriter writer = new FileWriter(outputfile, false);
+            writer.write(sb.toString());
+            writer.close();
                            
             System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.exportImage() - Image files and palettes exported.");
         } catch (Exception ex) {
