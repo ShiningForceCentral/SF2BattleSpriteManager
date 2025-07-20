@@ -7,9 +7,9 @@ package com.sfc.sf2.battlesprite.io;
 
 import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.battlesprite.BattleSprite;
+import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.graphics.PaletteDecoder;
 import com.sfc.sf2.palette.graphics.PaletteEncoder;
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -32,8 +32,8 @@ public class RawImageManager {
         System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.importImage() - Importing Image files ...");
         BattleSprite battlesprite = new BattleSprite();
         try{
-            List<Tile[]> frames = new ArrayList<Tile[]>();
-            List<Color[]> palettes = new ArrayList<Color[]>();
+            List<Tile[]> frames = new ArrayList<>();
+            List<Palette> palettes = new ArrayList<>();
             String dir = filepath.substring(0, filepath.lastIndexOf(System.getProperty("file.separator")));
             String pattern = filepath.substring(filepath.lastIndexOf(System.getProperty("file.separator"))+1);
             File directory = new File(dir);
@@ -44,7 +44,7 @@ public class RawImageManager {
                     frames.add(frame);
                 }else if(f.getName().startsWith(pattern + "-palette")){
                     byte[] data = Files.readAllBytes(f.toPath());
-                    Color[] palette = PaletteDecoder.parsePalette(data);
+                    Palette palette = new Palette(f.getName(), PaletteDecoder.parsePalette(data));
                     palettes.add(palette);
                 }
             }
@@ -59,7 +59,7 @@ public class RawImageManager {
                     palettes.add(0, frames.get(0)[0].getPalette());
                 }
                 battlesprite.setFrames(frames.toArray(new Tile[frames.size()][]));
-                battlesprite.setPalettes(palettes.toArray(new Color[palettes.size()][]));
+                battlesprite.setPalettes(palettes.toArray(new Palette[palettes.size()]));
             }
             String metaPath = filepath + ".meta";
             File inputFile = new File(metaPath);
@@ -91,11 +91,11 @@ public class RawImageManager {
                 String framePath = filepath + "-frame-" + String.valueOf(i) + com.sfc.sf2.graphics.io.RawImageManager.GetFileExtensionString(fileFormat);
                 com.sfc.sf2.graphics.io.RawImageManager.exportImage(frames[i], framePath, battlesprite.getType() == BattleSprite.TYPE_ALLY ? 12 : 16, fileFormat);
             }
-            Color[][] palettes = battlesprite.getPalettes();
+            Palette[] palettes = battlesprite.getPalettes();
             for(int i=0;i<palettes.length;i++){
                 String palettePath = filepath + "-palette-" + String.valueOf(i) + ".bin";
                 //palettes[i][0] = new Color(0, 255, 255, 0);
-                PaletteEncoder.producePalette(palettes[i]);
+                PaletteEncoder.producePalette(palettes[i].getColors());
                 byte[] palette = PaletteEncoder.getNewPaletteFileBytes();
                 Path graphicsFilePath = Paths.get(palettePath);
                 Files.write(graphicsFilePath,palette);

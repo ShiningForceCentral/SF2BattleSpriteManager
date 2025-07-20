@@ -6,7 +6,7 @@
 package com.sfc.sf2.battlesprite;
 
 import com.sfc.sf2.graphics.Tile;
-import java.awt.Color;
+import com.sfc.sf2.palette.Palette;
 
 /**
  *
@@ -20,7 +20,7 @@ public class BattleSprite {
     private int type;
     
     private Tile[][] frames;    
-    private Color[][] palettes;
+    private Palette[] palettes;
     
     private int animSpeed;    
     private byte statusOffsetX;
@@ -46,11 +46,11 @@ public class BattleSprite {
         this.frames = frames;
     }
 
-    public Color[][] getPalettes() {
+    public Palette[] getPalettes() {
         return palettes;
     }
 
-    public void setPalettes(Color[][] palettes) {
+    public void setPalettes(Palette[] palettes) {
         this.palettes = palettes;
     }
 

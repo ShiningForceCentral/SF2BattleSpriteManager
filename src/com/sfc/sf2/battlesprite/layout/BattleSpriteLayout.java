@@ -7,6 +7,7 @@ package com.sfc.sf2.battlesprite.layout;
 
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.graphics.Tile;
+import com.sfc.sf2.palette.Palette;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -60,7 +61,7 @@ public class BattleSpriteLayout extends JPanel {
         BufferedImage image;
         image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = (Graphics2D)image.getGraphics();
-        Color[] palette = battleSprite.getPalettes()[currentPalette];
+        Palette palette = battleSprite.getPalettes()[currentPalette];
             Tile[] frameTiles = battleSprite.getFrames()[currentAnimFrame];
             drawBattleSpriteFrame(graphics, frameTiles, 0, tilesPerRow, palette);
         graphics.dispose();
@@ -76,7 +77,7 @@ public class BattleSpriteLayout extends JPanel {
         BufferedImage image;
         image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = (Graphics2D)image.getGraphics();
-        Color[] palette = battleSprite.getPalettes()[currentPalette];
+        Palette palette = battleSprite.getPalettes()[currentPalette];
         for(int f = 0; f < frames; f++) {
             Tile[] frameTiles = battleSprite.getFrames()[f];
             drawBattleSpriteFrame(graphics, frameTiles, f*12*8, tilesPerRow, palette);
@@ -85,7 +86,7 @@ public class BattleSpriteLayout extends JPanel {
         return image;
     }
     
-    private void drawBattleSpriteFrame(Graphics2D graphics, Tile[] frameTiles, int yOffset, int tilesPerRow, Color[] palette) {
+    private void drawBattleSpriteFrame(Graphics2D graphics, Tile[] frameTiles, int yOffset, int tilesPerRow, Palette palette) {
         
         for(int t = 0; t < frameTiles.length; t++) {
             int x = (t%tilesPerRow)*8;

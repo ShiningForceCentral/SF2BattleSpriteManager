@@ -9,6 +9,7 @@ import com.sfc.sf2.graphics.Tile;
 import com.sfc.sf2.battlesprite.BattleSprite;
 import com.sfc.sf2.graphics.compressed.StackGraphicsDecoder;
 import com.sfc.sf2.graphics.compressed.StackGraphicsEncoder;
+import com.sfc.sf2.palette.Palette;
 import com.sfc.sf2.palette.graphics.PaletteDecoder;
 import com.sfc.sf2.palette.graphics.PaletteEncoder;
 import java.awt.Color;
@@ -42,15 +43,14 @@ public class DisassemblyManager {
                     battlesprite.setStatusOffsetY(getNextByte(data,3));
                     int palettesOffset = 4 + getNextWord(data,4);
                     int firstFrameOffset = 6 + getNextWord(data,6);
-                    List<Color[]> paletteList = new ArrayList<Color[]>();
+                    List<Palette> paletteList = new ArrayList<>();
                     for(int i=0;(palettesOffset+32*i)<firstFrameOffset;i++){
                         byte[] paletteData = new byte[32];
                         System.arraycopy(data, palettesOffset+i*32, paletteData, 0, paletteData.length);
-                        Color[] palette = PaletteDecoder.parsePalette(paletteData);
-                        //palette[0] = new Color(0, 255, 255, 0);
+                        Palette palette = new Palette(Integer.toString(i), PaletteDecoder.parsePalette(paletteData));
                         paletteList.add(palette);
                     }
-                    battlesprite.setPalettes(paletteList.toArray(new Color[paletteList.size()][]));
+                    battlesprite.setPalettes(paletteList.toArray(new Palette[paletteList.size()]));
                     List<Tile[]> frameList = new ArrayList<Tile[]>();
                     for(int i=0;(6+i*2)<palettesOffset;i++){
                         int frameOffset = 6+i*2 + getNextWord(data,6+i*2);
@@ -90,7 +90,7 @@ public class DisassemblyManager {
                 byte statusOffsetX = battlesprite.getStatusOffsetX();
                 byte statusOffsetY = battlesprite.getStatusOffsetY();
                 
-                Color[][] palettes = battlesprite.getPalettes();
+                Palette[] palettes = battlesprite.getPalettes();
                 byte[][] paletteBytes = new byte[palettes.length][];
             
                 Tile[][] frames = battlesprite.getFrames();
@@ -101,7 +101,7 @@ public class DisassemblyManager {
                 short palettesOffset = (short) (frames.length * 2 + 2);
                 
                 for(int i=0;i<palettes.length;i++){
-                    PaletteEncoder.producePalette(palettes[i]);
+                    PaletteEncoder.producePalette(palettes[i].getColors());
                     paletteBytes[i] = PaletteEncoder.getNewPaletteFileBytes();
                 }
                 
