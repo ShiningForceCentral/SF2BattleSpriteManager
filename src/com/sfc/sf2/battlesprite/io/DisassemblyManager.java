@@ -63,7 +63,7 @@ public class DisassemblyManager {
                         byte[] tileData = new byte[dataLength];
                         System.arraycopy(data, frameOffset, tileData, 0, dataLength);
                         Tile[] frame = new StackGraphicsDecoder().decodeStackGraphics(tileData, paletteList.get(0));
-                        frame = reorderTilesSequentially(frame, frame.length == 144);
+                        frame = com.sfc.sf2.graphics.io.DisassemblyManager.reorderTilesSequentially(frame, frame.length == 144 ? 3 : 4, 3, 4);
                         frameList.add(frame);
                         System.out.println("Frame "+i+" length="+dataLength+", offset="+frameOffset+", tiles="+frame.length);
                     }
@@ -108,7 +108,7 @@ public class DisassemblyManager {
                 int framesSize = 0;
                 int totalSize = 6 + frames.length * 2 + palettes.length * 32;
                 for(int i=0;i<frames.length;i++){
-                    Tile[] frameTiles = reorderTilesForDisasssembly(frames[i], battlesprite.getType() == BattleSprite.TYPE_ALLY);
+                    Tile[] frameTiles = com.sfc.sf2.graphics.io.DisassemblyManager.reorderTilesForDisasssembly(frames[i], (battlesprite.getType() == BattleSprite.TYPE_ALLY) ? 3 : 4, 3, 4);
                     StackGraphicsEncoder.produceGraphics(frameTiles);
                     frameBytes[i] = StackGraphicsEncoder.getNewGraphicsFileBytes();
                     if(i==0){
@@ -152,56 +152,6 @@ public class DisassemblyManager {
             System.out.println(ex);
         }  
         System.out.println("com.sfc.sf2.battlesprite.io.DisassemblyManager.exportDisassembly() - Disassembly exported.");        
-    }
-    
-    private static Tile[] reorderTilesSequentially(Tile[] tiles, boolean isAllyType) {
-        /* Disassembly tiles are stored in 4x4 chunks (top-bottom, left-right)
-            1  5  9 13 49 53                  
-            2  6 10 14 50  .                  
-            3  7 11 15 51  .                  
-            4  8 12 16 52  .                  
-           17 21 25 29  
-           18 22 26 30
-           19 23 27 31
-           20 24 28 32
-           33 37 41 45                  . 141
-           34 38 42 46                  . 142
-           35 39 43 47                  . 143
-           36 40 44 48                140 144
-        */
-        // \/ Edit these variables \/
-        int blockColumnCount = isAllyType ? 3 : 4;
-        int blockRowCount = 3;
-        int tilesPerBlock = 4;
-        // /\ Edit these variables /\
-        int blockTotalTiles = tilesPerBlock*tilesPerBlock;
-        Tile[] newTiles = new Tile[tiles.length];
-        for (int i = 0; i < tiles.length; i++) {
-            int bc = (i/tilesPerBlock) % blockColumnCount;
-            int br = i/(blockColumnCount*blockTotalTiles);
-            int tc = i%tilesPerBlock;
-            int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
-            newTiles[i] = tiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr];
-        }
-        return newTiles;
-    }
-    
-    private static Tile[] reorderTilesForDisasssembly(Tile[] tiles, boolean isAllyType) {
-        // \/ Edit these variables \/
-        int blockColumnCount = isAllyType ? 3 : 4;
-        int blockRowCount = 3;
-        int tilesPerBlock = 4;
-        // /\ Edit these variables /\
-        int blockTotalTiles = tilesPerBlock*tilesPerBlock;
-        Tile[] newTiles = new Tile[tiles.length];
-        for (int i = 0; i < tiles.length; i++) {
-            int bc = (i/tilesPerBlock) % blockColumnCount;
-            int br = i/(blockColumnCount*blockTotalTiles);
-            int tc = i%tilesPerBlock;
-            int tr = (i/(tilesPerBlock*blockColumnCount)) % tilesPerBlock;
-            newTiles[bc*(blockTotalTiles*blockRowCount) + br*blockTotalTiles + tc*tilesPerBlock + tr] = tiles[i];
-        }
-        return newTiles;
     }
     
     private static short getNextWord(byte[] data, int cursor){
