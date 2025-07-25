@@ -88,7 +88,7 @@ public class RawImageManager {
             System.out.println("com.sfc.sf2.battlesprite.io.RawImageManager.exportImage() - Exporting Image files and palettes ...");
             Tile[][] frames = battlesprite.getFrames();
             for(int i=0;i<frames.length;i++){
-                String framePath = filepath + "-frame-" + String.valueOf(i) + com.sfc.sf2.graphics.io.RawImageManager.GetFileExtensionString(fileFormat);
+                String framePath = filepath + "-frame-" + String.valueOf(i) + "." + com.sfc.sf2.graphics.io.RawImageManager.GetFileExtensionString(fileFormat);
                 com.sfc.sf2.graphics.io.RawImageManager.exportImage(frames[i], framePath, battlesprite.getType() == BattleSprite.TYPE_ALLY ? 12 : 16, fileFormat);
             }
             Palette[] palettes = battlesprite.getPalettes();
